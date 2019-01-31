@@ -43,12 +43,12 @@ export default {
       .catch((error) => { return error; });
   },
   setResponseHandler(response, file) {
-    file.s3Signature = response.signature;
-    file.s3Url = response.postEndpoint;
+    file.s3Signature = response.fields;
+    file.s3Url = response.url;
   },
   sendS3Handler(response, file) {
     let fd = new FormData(),
-      signature = response.signature;
+      signature = response.fields;
 
     Object.keys(signature).forEach(function (key) {
       fd.append(key, signature[key]);
@@ -56,7 +56,7 @@ export default {
     fd.append('file', file);
     return new Promise((resolve, reject) => {
       let request = new XMLHttpRequest();
-      request.open('POST', response.postEndpoint);
+      request.open('POST', response.url);
       request.onload = function () {
         if (request.status == 201) {
           var s3Error = (new window.DOMParser()).parseFromString(request.response, "text/xml");
