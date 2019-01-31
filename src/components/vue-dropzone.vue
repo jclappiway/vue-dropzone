@@ -138,8 +138,8 @@ export default {
       vm.$emit('vdropzone-success', file, response)
       if (vm.isS3) {
         if(vm.isS3OverridesServerPropagation){
-          var xmlResponse = (new window.DOMParser()).parseFromString(response, "text/xml");
-          var s3ObjectLocation = xmlResponse.firstChild.children[0].innerHTML;
+          // var xmlResponse = (new window.DOMParser()).parseFromString(response, "text/xml");
+          // var s3ObjectLocation = xmlResponse.firstChild.children[0].innerHTML;
           vm.$emit('vdropzone-s3-upload-success', s3ObjectLocation);
         }
           if (vm.wasQueueAutoProcess)
@@ -365,7 +365,7 @@ export default {
           promise.then((response) => {
             if (response.success) {
               file.s3ObjectLocation = response.message
-              setTimeout(() => this.dropzone.processFile(file))
+              // setTimeout(() => this.dropzone.processFile(file))
               this.$emit('vdropzone-s3-upload-success', response.message);
             } else {
               if ('undefined' !== typeof response.message) {
